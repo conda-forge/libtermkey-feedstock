@@ -10,25 +10,25 @@ source:
   sha256: 6945bd3c4aaa83da83d80a045c5563da4edd7d0374c62c0d35aec09eb3014600
 
 build:
-  number: 2
+  number: 3
 
 requirements:
   build:
     - ${{ compiler('c') }}
     - ${{ stdlib('c') }}
     - if: win
-      then: cmake
+      then:
+        - cmake
+        - ninja
     - if: unix
-      then: make
-    - if: win
-      then: ninja
-    - if: unix
-      then: pkg-config
+      then:
+        - make
+        - pkg-config
   host:
     - if: unix
-      then: libtool
-    - if: unix
-      then: ncurses
+      then:
+        - libtool
+        - ncurses
     - unibilium
   run_exports:
     - ${{ pin_subpackage('libtermkey', upper_bound='x.x') }}
